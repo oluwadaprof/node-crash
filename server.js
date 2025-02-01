@@ -1,12 +1,19 @@
-import http from 'http'
-const PORT = 8000
+import http from "http";
+const PORT = process.env.PORT;
 
-const server = http.createServer((req, res)=> {
-    res.setHeader('Content-Type', 'text/plain')
-    res.statusCode = 404
-    res.end('<h1>Hello Motherfucker new</h1>')
-})
+const server = http.createServer((req, res) => {
+  if (req.url === "/") {
+    res.writeHead(200, { "Content-type": "text/html" });
+    res.end("<h1>Home</h1>");
+  } else if (req.url === "/about") {
+    res.writeHead(200, { "Content-type": "text/html" });
+    res.end("<h1>About</h1>");
+  } else {
+    res.writeHead(404, { "Content-type": "text/html" });
+    res.end("<h1>Not found</h1>");
+  }
+});
 
-server.listen(PORT, ()=> {
-    console.log(`Server running on port ${PORT}`)
-})
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
